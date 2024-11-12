@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace topic_3_mono
 {
@@ -19,6 +20,14 @@ namespace topic_3_mono
         Texture2D creamTribbleTexture;
         Rectangle creamtexturerect;
         Vector2 creamtribbleSpeed;
+
+        Texture2D orangeTribbleTexture;
+        Rectangle orangetexturerect;
+        Vector2 orangetribbleSpeed;
+
+        Color backColor;
+
+        Random rand = new Random();
 
 
 
@@ -47,10 +56,20 @@ namespace topic_3_mono
             greytribbleSpeed = new Vector2(2, 2);
 
             browntexturerect = new Rectangle(0, 0, 100, 200);
-            window = new Rectangle(0, 0, 500, 300);
-            browntribbleSpeed = new Vector2(0, 5);
+            window = new Rectangle(0, 0, 800, 600);
+            browntribbleSpeed = new Vector2(5, 2);
+
+            creamtexturerect = new Rectangle(0, 0, 100, 200);
+            window = new Rectangle(0, 0, 800, 600);
+            creamtribbleSpeed = new Vector2(7, 2);
+
+            orangetexturerect = new Rectangle(0, 0, 100, 200);
+            window = new Rectangle(0, 0, 800, 600);
+            orangetribbleSpeed = new Vector2(2, 10);
 
 
+
+            backColor = Color.Aqua;
 
             base.Initialize();
         }
@@ -61,6 +80,12 @@ namespace topic_3_mono
             greyTribbleTexture = Content.Load<Texture2D>("tribbleGrey");
 
             brownTribbleTexture = Content.Load<Texture2D>("tribbleBrown");
+
+            creamTribbleTexture = Content.Load<Texture2D>("tribbleCream");
+
+            orangeTribbleTexture = Content.Load<Texture2D>("tribbleOrange");
+
+
 
 
             // TODO: use this.Content to load your game content here
@@ -74,8 +99,12 @@ namespace topic_3_mono
             // TODO: Add your update logic here
             greytexturerect.X += (int)greytribbleSpeed.X;
             greytexturerect.Y += (int)greytribbleSpeed.Y;
-            if (greytexturerect.Right > window.Width || greytexturerect.Left < 0) 
+            if (greytexturerect.Right > window.Width || greytexturerect.Left < 0)
+            {
                 greytribbleSpeed.X *= -1;
+               backColor = Color.Red;
+
+            }
 
             if (greytexturerect.Bottom > window.Height || greytexturerect.Top < 0)
                 greytribbleSpeed.Y *= -1;
@@ -90,6 +119,29 @@ namespace topic_3_mono
 
 
 
+            creamtexturerect.X += (int)creamtribbleSpeed.X;
+            creamtexturerect.Y += (int)creamtribbleSpeed.Y;
+            if (creamtexturerect.Right > window.Width || creamtexturerect.Left < 0)
+                creamtribbleSpeed.X *= -1;
+
+            if (creamtexturerect.Bottom > window.Height || creamtexturerect.Top < 0)
+                creamtribbleSpeed.Y *= -1;
+
+
+
+            orangetexturerect.X += (int)orangetribbleSpeed.X;
+            orangetexturerect.Y += (int)orangetribbleSpeed.Y;
+            if (orangetexturerect.Right > window.Width || orangetexturerect.Left < 0)
+                orangetribbleSpeed.X *= -1;
+
+            if (orangetexturerect.Bottom > window.Height || orangetexturerect.Top < 0)
+                orangetribbleSpeed.Y *= -1;
+
+
+
+
+
+
 
 
             base.Update(gameTime);
@@ -97,12 +149,15 @@ namespace topic_3_mono
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(backColor);
 
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
             _spriteBatch.Draw(greyTribbleTexture,greytexturerect, Color.White);
             _spriteBatch.Draw(brownTribbleTexture, browntexturerect, Color.White);
+            _spriteBatch.Draw(creamTribbleTexture, creamtexturerect, Color.White);
+            _spriteBatch.Draw(orangeTribbleTexture, orangetexturerect, Color.White);
+
             _spriteBatch.End(); 
 
             base.Draw(gameTime);
